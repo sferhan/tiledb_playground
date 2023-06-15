@@ -1,0 +1,6 @@
+auxlib==0.0.43
+av==10.0.0
+numpy==1.24.3
+opencv-python==4.7.0.72
+packaging==23.1
+tiledb==0.21.3
