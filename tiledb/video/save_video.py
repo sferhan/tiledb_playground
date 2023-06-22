@@ -29,8 +29,9 @@ def save_video_to_tiledb(video_path, tiledb_uri):
         sparse=True
     )
     
-    # Create the TileDB array
-    tiledb.Array.create(tiledb_uri, schema)
+    if tiledb.object_type(tiledb_uri, ctx) != "array":
+        # Create the TileDB array
+        tiledb.Array.create(tiledb_uri, schema)
     
     start = time.time()
     # Open the TileDB array in write mode
