@@ -36,7 +36,7 @@ def save_video_to_tiledb(video_path, tiledb_uri):
     print(f"Total time taken: ", abs(end-start))
 
 # Usage example
-video_path = "/Users/ferhanhaider/Desktop/Workspaces/Study/research_project/playground/tiledb_playground/tiledb/video/sample-5s.mp4"
-tiledb_uri = "/Users/ferhanhaider/Desktop/Workspaces/Study/research_project/playground/tiledb_playground/tiledb/video/video.array"
+video_path = "./sample-5s.mp4"
+tiledb_uri = "./tiledb/video/video.array"
 
 save_video_to_tiledb(video_path, tiledb_uri)

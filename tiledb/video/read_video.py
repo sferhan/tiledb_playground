@@ -1,55 +1,40 @@
 import tiledb
 import cv2
 import numpy as np
-import tempfile
+import time
 import av
+import io
 
 ctx = tiledb.Ctx()
-array_uri = "/Users/ferhanhaider/Desktop/Workspaces/Study/research_project/playground/tiledb_playground/tiledb/video/video.array"
+array_uri = "./tiledb/video/video.array"
+
+frames = []
+start = time.time()
 with tiledb.SparseArray(array_uri) as array:
-    schema = array.schema
 
-    video_stream = array[:]["video"][0]
-    print("Length of video saved to TileDB: ", len(array[:]["video"][0]))
-    temp_file = tempfile.NamedTemporaryFile(delete=False)
-    temp_file.write(video_stream)
-    temp_file.close()
+    start1 = time.time()
+    video_stream = io.BytesIO(array[:]["video"][0])
+    end1 = time.time()
+    print(f"T1 : {abs(end1-start1)} seconds")
 
-    video_source = cv2.VideoCapture(temp_file.name)
-    if not video_source.isOpened():
-        print("Error opening video")
-        exit()
-    else:
-        frames = []
-        while video_source.isOpened():
-            ret, frame = video_source.read()
-            if not ret:
-                break
-            cv2.imshow("Frame", frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+    video = av.open(video_stream)
 
-    video_source.release()
-    cv2.destroyAllWindows()
+    start2 = time.time()
+    for frame in video.decode(video=0):
+        # Convert the frame to a NumPy array
+        frame_np_array = frame.to_ndarray(format='bgr24')
 
-    # frame_shape = attrs["video"].shape
-    # frame_dtype = attrs["video"].dtype
+        frames.append(frame_np_array)
+    end2 = time.time()
+    print(f"T2 : {abs(end2-start2)} seconds")
+    video.close()
 
-    # with array.query(attrs=["video"]) as q:
-    #     q.add_range(
-    #         dim=0,
-    #         start=0,  # Start frame index
-    #         end=frame_shape[0]  # End frame index
-    #     )
-    #     q.submit()
-    #     frames = q.results()["frames"]
-        
-    #     for frame in frames:
-    #         # Convert the frame data to the appropriate format for OpenCV
-    #         frame_data = np.frombuffer(frame, dtype=frame_dtype).reshape(frame_shape[1:])
-    #         frame_data = cv2.cvtColor(frame_data, cv2.COLOR_BGR2RGB)  # If needed, convert color space
-            
-    #         # Process the frame (e.g., display, save, etc.)
-    #         cv2.imshow("Video", frame_data)
-    #         if cv2.waitKey(1) & 0xFF == ord('q'):
-    #             break
+end = time.time()
+print(f"Total time taken for reading the complete video is : {abs(end-start)} seconds")
+
+for frame in frames:
+    cv2.imshow("Frame", frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cv2.destroyAllWindows()
