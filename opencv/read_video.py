@@ -1,11 +1,14 @@
 import cv2
 import time
+import os
+
+SAMPLE_VIDEO_PATH = os.environ["SAMPLE_VIDEO_PATH"]
 
 frames  = []
 
 start = time.time()
 
-video_source = cv2.VideoCapture('./sample-5s.mp4')
+video_source = cv2.VideoCapture(SAMPLE_VIDEO_PATH)
 while video_source.isOpened():
     ret, frame = video_source.read()
     if not ret:

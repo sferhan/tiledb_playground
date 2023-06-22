@@ -4,9 +4,12 @@ import numpy as np
 import time
 import av
 import io
+import os
+
+TILE_DB_PATH = os.environ["TILE_DB_PATH"]
 
 ctx = tiledb.Ctx()
-array_uri = "./tiledb/video/video.array"
+array_uri = TILE_DB_PATH
 
 desired_frame = None
 

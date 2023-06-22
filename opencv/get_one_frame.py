@@ -1,8 +1,11 @@
 import cv2
 import time
+import os
+
+SAMPLE_VIDEO_PATH = os.environ["SAMPLE_VIDEO_PATH"]
 
 # Open the video file
-video_path = './sample-5s.mp4'
+video_path = SAMPLE_VIDEO_PATH
 
 start = time.time()
 cap = cv2.VideoCapture(video_path)

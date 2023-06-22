@@ -1,9 +1,13 @@
 import cv2
 import time
+import os
 
-video_source = cv2.VideoCapture('./sample-5s.mp4')
+SAMPLE_VIDEO_PATH = os.environ["SAMPLE_VIDEO_PATH"]
+OUTPUT_VIDEO_PATH = os.environ["OUTPUT_VIDEO_PATH"]
 
-output_filename = './output.mp4'
+video_source = cv2.VideoCapture(SAMPLE_VIDEO_PATH)
+
+output_filename = OUTPUT_VIDEO_PATH
 
 fourcc = int(video_source.get(cv2.CAP_PROP_FOURCC))
 codec = chr(fourcc&0xff) + chr((fourcc>>8)&0xff) + chr((fourcc>>16)&0xff) + chr((fourcc>>24)&0xff)

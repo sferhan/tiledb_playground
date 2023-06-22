@@ -1,6 +1,10 @@
 import tiledb
 import numpy as np
 import time
+import os
+
+TILE_DB_PATH = os.environ["TILE_DB_PATH"]
+SAMPLE_VIDEO_PATH = os.environ["SAMPLE_VIDEO_PATH"]
 
 def save_video_to_tiledb(video_path, tiledb_uri):
     # Open the video file
@@ -36,7 +40,7 @@ def save_video_to_tiledb(video_path, tiledb_uri):
     print(f"Total time taken: ", abs(end-start))
 
 # Usage example
-video_path = "./sample-5s.mp4"
-tiledb_uri = "./tiledb/video/video.array"
+video_path = SAMPLE_VIDEO_PATH
+tiledb_uri = TILE_DB_PATH
 
 save_video_to_tiledb(video_path, tiledb_uri)

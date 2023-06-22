@@ -6,10 +6,17 @@ Just playing around with TileDB and OpenCV with the following goals
 4. Perform Read/Write operations on images & videos using TileDB and OpenCV video-writer and compare their performance
 
 ## Setting Up
+Setup Python environment
 ```
 python3 -m venv venv
 source ./venv/bin/activate
 pip install -r ./requirements.txt
+```
+Export environment variables
+```
+export OUTPUT_VIDEO_PATH=./output.mp4
+export TILE_DB_PATH=./tiledb/video/video.array
+export SAMPLE_VIDEO_PATH=./sample-5m43s.mp4
 ```
 
 ## Operations
